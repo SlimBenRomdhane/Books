@@ -9,7 +9,7 @@ namespace Books.Services
     interface IBooksServices
     {
         List<BookModel> GetAllBooks();
-        List<BookModel> FoundBooks(string searchParam);
+        List<BookModel> FoundBooks(string searchByTilte, string searchByAuthor,string searchByGenre);
         int AddBook(BookModel bookModel);
         BookModel DetailBook(int idBook);
         int UpdateBook(BookModel bookModel);

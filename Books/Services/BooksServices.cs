@@ -32,9 +32,43 @@ namespace Books.Services
             throw new NotImplementedException();
         }
 
-        public List<BookModel> FoundBooks(string searchParam)
+        public List<BookModel> FoundBooks(string searchByTilte, string searchByAuthor, string searchByGenre)
         {
-            throw new NotImplementedException();
+            List<BookModel> Books = new List<BookModel>();
+            string Requete = "Select * from Books where Title like @titleParam AND Author like @authorParam AND Genre like @genreParam";
+            using (SqlConnection MyConnection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand MyCommand = new SqlCommand(Requete, MyConnection);
+                MyCommand.Parameters.AddWithValue("@titleParam", "%" + searchByTilte + "%");
+                MyCommand.Parameters.AddWithValue("@authorParam", "%" + searchByAuthor + "%");
+                MyCommand.Parameters.AddWithValue("@genreParam", "%" + searchByGenre + "%");
+                try
+                {
+                    MyConnection.Open();
+                    SqlDataReader MyReader = MyCommand.ExecuteReader();
+                    if (MyReader.HasRows)
+                    {
+                        while (MyReader.Read())
+                        {
+                            Books.Add(new BookModel
+                            {
+                                Id = (int)MyReader["Id"],
+                                Title = (string)MyReader["Title"],
+                                Author = (string)MyReader["Author"],
+                                NumberOfPages = (int)MyReader["NumberOfPages"],
+                                Genre = (string)MyReader["Genre"],
+                                Price = (double)Convert.ToDecimal(MyReader["Price"])
+                            });
+                        }
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    Console.WriteLine(Ex.Message);
+                    Console.Beep();
+                }
+                return Books;
+            }
         }
 
         public List<BookModel> GetAllBooks()
@@ -59,7 +93,7 @@ namespace Books.Services
                                 Author = (string)MyReader["Author"],
                                 NumberOfPages = (int)MyReader["NumberOfPages"],
                                 Genre = (string)MyReader["Genre"],
-                                Price = (double)Convert.ToDecimal( MyReader["Price"])
+                                Price = (double)Convert.ToDecimal(MyReader["Price"])
                             });
                         }
                     }

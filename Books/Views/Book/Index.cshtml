@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<Books.Models.BookModel>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a><br />
+    Number of found books is :<p class="bg-success">@ViewBag.BookCout</p>
 </p>
 
 <div class="container d-flex flex-wrap">
