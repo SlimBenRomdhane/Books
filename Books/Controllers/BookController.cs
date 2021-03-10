@@ -12,7 +12,27 @@ namespace Books.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.BookCout = BooksServices.GetAllBooks().Count();
             return View(BooksServices.GetAllBooks());
+        }
+
+        public IActionResult CreateForm()
+        {
+            return View();
+        }
+        public IActionResult AddBookProcess(BookModel book)
+        {
+
+            if (ModelState.IsValid)
+            {
+                BooksServices.AddBook(book);
+                return View("BookSuccessfullyAdded");
+            }
+            else
+                return View("CreateForm",book);
+
+           
+            
         }
 
         public IActionResult SearchPage()

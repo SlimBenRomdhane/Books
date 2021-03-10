@@ -7,9 +7,11 @@ namespace Books.Models
         [Display(Name = "The Book Reference :")]
         public int Id { get; set; }
 
+        [Required]
         [Display(Name = "Book Title :")]
         public string Title { get; set; }
 
+        [Required]
         [Display(Name = "Written By :")]
         public string Author { get; set; }
 
@@ -17,9 +19,9 @@ namespace Books.Models
         [Range(50, 1000)]
         public int NumberOfPages { get; set; }
 
-        [Display(Name ="Genre/s is/are")]
+        [Required]
+        [Display(Name = "Genre/s is/are")]
         public string Genre { get; set; }
-
 
         [Display(Name = "Selling Price")]
         [DataType(DataType.Currency)]

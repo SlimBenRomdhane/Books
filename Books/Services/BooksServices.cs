@@ -1,6 +1,8 @@
-﻿using Books.Models;
+﻿using Bogus;
+using Books.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Books.Services
@@ -19,7 +21,31 @@ namespace Books.Services
 
         public int AddBook(BookModel bookModel)
         {
-            throw new NotImplementedException();
+            int Result = 0;
+            string Requete = "Insert into Books (Title,Author,NumberOfPages,Genre,Price) values (@titleParam,@authorParam,@numberParam,@genreParam,@priceParam)";
+            using (SqlConnection MyConnection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand MyCommand = new SqlCommand(Requete, MyConnection);
+                MyCommand.Parameters.AddWithValue("@titleParam",bookModel.Title);
+                MyCommand.Parameters.AddWithValue("@authorParam", bookModel.Author);
+                MyCommand.Parameters.AddWithValue("@numberParam", bookModel.NumberOfPages);
+                MyCommand.Parameters.AddWithValue("@genreParam", bookModel.Genre);
+                MyCommand.Parameters.AddWithValue("@priceParam", bookModel.Price);
+                try
+                {
+                    MyConnection.Open();
+                    Result= MyCommand.ExecuteNonQuery();
+                    
+                }
+                catch (Exception)
+                {
+
+                    Console.Beep();
+                }
+
+                //// The code is not complete yet
+                return Result;
+            }
         }
 
         public int DeleteBook(BookModel bookModel)
