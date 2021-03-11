@@ -11,21 +11,7 @@
     @foreach (var item in Model)
     {
 
-        <div class="card" style="width: 18rem;">
-            <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-            <div class="card-body bg-light">
-                <h5 class="card-title">@item.Title</h5>
-                <p class="card-text">
-                    @item.Author<br />
-                    @item.NumberOfPages<br />
-                    @item.Genre<br />
-                    @item.Price
-                </p>
-                <a href="Book/MoreDetails/@item.Id" class="btn btn-primary">Tell me more</a>
-                <a href="#" class="btn btn-warning">Edit this copy</a>
-                <a href="Book/DeletePage/@item.Id" class="btn btn-danger">Delete this shit</a>
-            </div>
-        </div>
+        <partial name="_OneBook" model="item" />
 
     }
 </div>
