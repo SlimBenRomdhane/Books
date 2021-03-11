@@ -1,8 +1,6 @@
-﻿using Bogus;
-using Books.Models;
+﻿using Books.Models;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 
 namespace Books.Services
@@ -26,7 +24,7 @@ namespace Books.Services
             using (SqlConnection MyConnection = new SqlConnection(ConnectionString))
             {
                 SqlCommand MyCommand = new SqlCommand(Requete, MyConnection);
-                MyCommand.Parameters.AddWithValue("@titleParam",bookModel.Title);
+                MyCommand.Parameters.AddWithValue("@titleParam", bookModel.Title);
                 MyCommand.Parameters.AddWithValue("@authorParam", bookModel.Author);
                 MyCommand.Parameters.AddWithValue("@numberParam", bookModel.NumberOfPages);
                 MyCommand.Parameters.AddWithValue("@genreParam", bookModel.Genre);
@@ -34,12 +32,10 @@ namespace Books.Services
                 try
                 {
                     MyConnection.Open();
-                    Result= MyCommand.ExecuteNonQuery();
-                    
+                    Result = MyCommand.ExecuteNonQuery();
                 }
                 catch (Exception)
                 {
-
                     Console.Beep();
                 }
 
@@ -50,12 +46,63 @@ namespace Books.Services
 
         public int DeleteBook(BookModel bookModel)
         {
-            throw new NotImplementedException();
+            int Result = 0;
+            string Requete = "delete from Books where Id = @idParam;";
+            using (SqlConnection MyConnection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand MyCommand = new SqlCommand(Requete, MyConnection);
+                MyCommand.Parameters.AddWithValue("@idParam", bookModel.Id);
+                
+                try
+                {
+                    MyConnection.Open();
+                    Result = MyCommand.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    Console.Beep();
+                }
+
+                //// The code is not complete yet
+                return Result;
+            }
         }
 
         public BookModel DetailBook(int idBook)
         {
-            throw new NotImplementedException();
+            BookModel Book = null;
+            string Requete = "Select * from Books where Id = @idParam";
+            using (SqlConnection MyConnection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand MyCommand = new SqlCommand(Requete, MyConnection);
+                MyCommand.Parameters.AddWithValue("@idParam", idBook);
+                try
+                {
+                    MyConnection.Open();
+                    SqlDataReader MyReader = MyCommand.ExecuteReader();
+                    if (MyReader.HasRows)
+                    {
+                        while (MyReader.Read())
+                        {
+                            Book = new BookModel
+                            {
+                                Id = (int)MyReader["Id"],
+                                Title = (string)MyReader["Title"],
+                                Author = (string)MyReader["Author"],
+                                NumberOfPages = (int)MyReader["NumberOfPages"],
+                                Genre = (string)MyReader["Genre"],
+                                Price = (double)Convert.ToDecimal(MyReader["Price"])
+                            };
+                        }
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    Console.WriteLine(Ex.Message);
+                    Console.Beep();
+                }
+                return Book;
+            }
         }
 
         public List<BookModel> FoundBooks(string searchByTilte, string searchByAuthor, string searchByGenre)

@@ -1,9 +1,11 @@
 ﻿@model IEnumerable<Books.Models.BookModel>
 
-<p>
-    <a asp-action="CreateForm">Create New</a><br />
-    Total of found books :<p class="bg-success">@ViewBag.BookCout</p>
-</p>
+
+<a asp-action="CreateForm">Create New</a>
+<br />
+    Total of found books :
+<p class="bg-success">@ViewBag.BookCout</p>
+
 
 <div class="container d-flex flex-wrap">
     @foreach (var item in Model)
@@ -19,12 +21,11 @@
                     @item.Genre<br />
                     @item.Price
                 </p>
-                <a href="#" class="btn btn-primary">Tell me more</a>
+                <a href="Book/MoreDetails/@item.Id" class="btn btn-primary">Tell me more</a>
                 <a href="#" class="btn btn-warning">Edit this copy</a>
-                <a href="#" class="btn btn-danger">Delete this shit</a>
+                <a href="Book/DeletePage/@item.Id" class="btn btn-danger">Delete this shit</a>
             </div>
         </div>
 
     }
 </div>
-

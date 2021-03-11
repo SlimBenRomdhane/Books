@@ -20,19 +20,16 @@ namespace Books.Controllers
         {
             return View();
         }
+
         public IActionResult AddBookProcess(BookModel book)
         {
-
             if (ModelState.IsValid)
             {
                 BooksServices.AddBook(book);
                 return View("BookSuccessfullyAdded");
             }
             else
-                return View("CreateForm",book);
-
-           
-            
+                return View("CreateForm", book);
         }
 
         public IActionResult SearchPage()
@@ -43,9 +40,30 @@ namespace Books.Controllers
         public IActionResult SearchResult(string searchByTilte, string searchByAuthor, string searchByGenre)
         {
             List<BookModel> Books = new List<BookModel>();
-            Books = BooksServices.FoundBooks(searchByTilte,searchByAuthor,searchByGenre);
+            Books = BooksServices.FoundBooks(searchByTilte, searchByAuthor, searchByGenre);
             ViewBag.BookCout = Books.Count();
-            return View("Index",Books);
+            return View("Index", Books);
+        }
+
+        public IActionResult MoreDetails(int Id)
+        {
+            _ = new BookModel();
+            BookModel book = BooksServices.DetailBook(Id);
+            return View(book);
+        }
+
+        public IActionResult DeletePage(int Id)
+        {
+
+            return View(BooksServices.DetailBook(Id));
+        }
+        public IActionResult DeleteBook(int Id)
+        {
+            BookModel book = new BookModel();
+            book = BooksServices.DetailBook(Id);
+            BooksServices.DeleteBook(book);
+            return RedirectToAction("Index","Book");
+
         }
     }
 }
