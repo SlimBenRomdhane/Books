@@ -52,6 +52,13 @@ namespace Books.Controllers
             return View(book);
         }
 
+        public IActionResult JsonMoreDetails(int Id)
+        {
+            _ = new BookModel();
+            BookModel book = BooksServices.DetailBook(Id);
+            return Json(book);
+        }
+
         public IActionResult DeletePage(int Id)
         {
 

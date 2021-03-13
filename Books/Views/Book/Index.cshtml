@@ -10,8 +10,46 @@
 <div class="container d-flex flex-wrap">
     @foreach (var item in Model)
     {
-
-        <partial name="_OneBook" model="item" />
-
+        <div id="@item.Id">
+            <partial name="_OneBook" model="item" />
+        </div>
     }
+</div>
+<div class="modal fade" id="CreateNewBook" tabindex="-1" aria-labelledby="CreateNewBookLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="CreateNewBookLabel">Add new book</h5>                
+            </div>
+            <div class="modal-body">
+                <form asp-action="AddBookProcess">                   
+                    <div class="form-group">
+                        <label for="Title" class="control-label">Title</label>
+                        <input for="Title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Author" class="control-label">Author</label>
+                        <input for="Author" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="NumberOfPages" class="control-label">NumberOfPages</label>
+                        <input for="NumberOfPages" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Genre" class="control-label">Genre</label>
+                        <input for="Genre" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Price" class="control-label">Price</label>
+                        <input for="Price" class="form-control" />
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>
