@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<Books.Models.BookModel>
 
-
 <a asp-action="CreateForm">Create New</a>
 <br />
     Total of found books :
 <p class="bg-success">@ViewBag.BookCout</p>
-
 
 <div class="container d-flex flex-wrap">
     @foreach (var item in Model)
@@ -19,10 +17,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="CreateNewBookLabel">Add new book</h5>                
+                <h5 class="modal-title" id="CreateNewBookLabel">Add new book</h5>
             </div>
             <div class="modal-body">
-                <form asp-action="AddBookProcess">                   
+                <form asp-action="AddBookProcess">
                     <div class="form-group">
                         <label for="Title" class="control-label">Title</label>
                         <input for="Title" class="form-control" />
@@ -44,7 +42,6 @@
                         <input for="Price" class="form-control" />
                     </div>
                 </form>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

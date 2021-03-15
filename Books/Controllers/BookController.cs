@@ -61,16 +61,15 @@ namespace Books.Controllers
 
         public IActionResult DeletePage(int Id)
         {
-
             return View(BooksServices.DetailBook(Id));
         }
+
         public IActionResult DeleteBook(int Id)
         {
             BookModel book = new BookModel();
             book = BooksServices.DetailBook(Id);
             BooksServices.DeleteBook(book);
-            return RedirectToAction("Index","Book");
-
+            return RedirectToAction("Index", "Book");
         }
     }
 }

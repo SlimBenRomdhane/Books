@@ -3,8 +3,6 @@ using Books.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Books.Controllers
 {
@@ -12,8 +10,7 @@ namespace Books.Controllers
     [Route("api/")]
     public class BookAPIController : ControllerBase
     {
-
-        BooksServices booksServices = new BooksServices();
+        private BooksServices booksServices = new BooksServices();
 
         [HttpGet]
         public ActionResult<IEnumerable<BookModel>> Index()
@@ -22,15 +19,17 @@ namespace Books.Controllers
         }
 
         [HttpGet("getBookById/{Id}")]
-        public ActionResult<BookModel> MoreDetails(int Id)
+        public ActionResult<BookModelDTO> MoreDetails(int Id)
         {
-            return booksServices.DetailBook(Id);
+            BookModel book = booksServices.DetailBook(Id);
+            BookModelDTO bookDTO = new BookModelDTO(book);
+            return bookDTO;
         }
 
         [HttpGet("searchResult/{searchByTilte?}")]
-
         public ActionResult<IEnumerable<BookModel>> SearchResult(string searchByTilte, string searchByAuthor, string searchByGenre)
         {
+            //Only one parameter is working, didn't figure out how to put 3 parameters...
             return booksServices.FoundBooks(searchByTilte, searchByAuthor, searchByGenre);
         }
 
@@ -39,7 +38,14 @@ namespace Books.Controllers
         {
             BookModel book = new BookModel();
             book = booksServices.DetailBook(Id);
-            return booksServices.DeleteBook(book);
+            try
+            {
+                return booksServices.DeleteBook(book);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
 
         [HttpPost("addNewBook")]

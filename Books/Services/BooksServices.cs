@@ -52,7 +52,7 @@ namespace Books.Services
             {
                 SqlCommand MyCommand = new SqlCommand(Requete, MyConnection);
                 MyCommand.Parameters.AddWithValue("@idParam", bookModel.Id);
-                
+
                 try
                 {
                     MyConnection.Open();
