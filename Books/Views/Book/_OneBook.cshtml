@@ -8,7 +8,8 @@
             @Model.Author<br />
             @Model.NumberOfPages<br />
             @Model.Genre<br />
-            @Model.Price
+            <p>Price in local currency</p>@Model.Price<br />            
+            <p>Available copies</p>@Model.AvailableCopies
         </p>
         <a href="Book/MoreDetails/@Model.Id" class="btn btn-primary">Tell me more</a>
         <a href="#" class="btn btn-warning">Edit this copy</a>

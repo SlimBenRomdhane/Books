@@ -26,5 +26,11 @@ namespace Books.Models
         [Display(Name = "Selling Price")]
         [DataType(DataType.Currency)]
         public double Price { get; set; }
+
+        
+        [Required]
+        [Display(Name = "Number of available copies")]
+        [Range(5, 10)]
+        public int AvailableCopies { get; set; }
     }
 }
