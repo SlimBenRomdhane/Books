@@ -20,8 +20,8 @@ namespace Books.Services
         public int AddBook(BookModel bookModel)
         {
             int Result = 0;
-            string Requete = "Insert into Books (Title,Author,NumberOfPages,Genre,Price)" +
-                " values (@titleParam,@authorParam,@numberParam,@genreParam,@priceParam,@bookedParam,@numberofCopiesParam)";
+            string Requete = "Insert into Books (Title,Author,NumberOfPages,Genre,Price,AvailableCopies)" +
+                " values (@titleParam,@authorParam,@numberParam,@genreParam,@priceParam,@numberofCopiesParam)";
             using (SqlConnection MyConnection = new SqlConnection(ConnectionString))
             {
                 SqlCommand MyCommand = new SqlCommand(Requete, MyConnection);
@@ -30,7 +30,6 @@ namespace Books.Services
                 MyCommand.Parameters.AddWithValue("@numberParam", bookModel.NumberOfPages);
                 MyCommand.Parameters.AddWithValue("@genreParam", bookModel.Genre);
                 MyCommand.Parameters.AddWithValue("@priceParam", bookModel.Price);
-                
                 MyCommand.Parameters.AddWithValue("@numberofCopiesParam", bookModel.AvailableCopies);
                 try
                 {
@@ -170,7 +169,7 @@ namespace Books.Services
                                 NumberOfPages = (int)MyReader["NumberOfPages"],
                                 Genre = (string)MyReader["Genre"],
                                 Price = (double)Convert.ToDecimal(MyReader["Price"]),
-                                
+
                                 AvailableCopies = (int)MyReader["AvailableCopies"]
                             });
                         }

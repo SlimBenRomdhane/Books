@@ -1,6 +1,7 @@
 ﻿using Books.Models;
 using Books.Services;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace Books.Controllers
     public class BookController : Controller
     {
         private BooksServices BooksServices = new BooksServices();
-
+        private static Logger myLogger = LogManager.GetLogger("TheLogger");
         public IActionResult Index()
         {
             ViewBag.BookCout = BooksServices.GetAllBooks().Count();
@@ -25,11 +26,16 @@ namespace Books.Controllers
         {
             if (ModelState.IsValid)
             {
+                myLogger.Info("A new book has been added to the list");
                 BooksServices.AddBook(book);
                 return View("BookSuccessfullyAdded");
             }
             else
+            {
+                myLogger.Error("An error accured while adding a new book");
                 return View("CreateForm", book);
+            }
+                
         }
 
         public IActionResult SearchPage()
@@ -68,6 +74,8 @@ namespace Books.Controllers
         {
             BookModel book = new BookModel();
             book = BooksServices.DetailBook(Id);
+            
+            myLogger.Fatal("The book number "+ book.Id+ " has been deleted from the list");
             BooksServices.DeleteBook(book);
             return RedirectToAction("Index", "Book");
         }

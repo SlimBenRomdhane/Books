@@ -42,8 +42,7 @@ namespace Books.Models
             PriceString = price.ToString() + "$";
             Tax = Price * 0.18;
             NumberOfChapters = numberOfPages / 20;
-            ShortDescription = "This book is an "+Genre+ " one" ;
-                
+            ShortDescription = "This book is an " + Genre + " one";
         }
 
         public BookModelDTO(BookModel book)
@@ -58,9 +57,6 @@ namespace Books.Models
             Tax = (Price * 0.18);
             NumberOfChapters = NumberOfPages / 20;
             ShortDescription = "This book is an " + Genre + " one";
-
         }
-
-
     }
 }
